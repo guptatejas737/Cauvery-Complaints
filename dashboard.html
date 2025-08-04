@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Complaint - Hostel Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Hostel Complaints</span>
+            </div>
+            <div class="nav-actions">
+                <button id="theme-btn" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-menu">
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">User</span>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <a href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="complaint-form-container">
+            <div class="form-header">
+                <h1><i class="fas fa-plus-circle"></i> Submit New Complaint</h1>
+                <p>Fill out the form below to lodge your complaint. All fields are required.</p>
+            </div>
+
+            <form id="complaintForm" class="complaint-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">
+                            <i class="fas fa-user"></i>
+                            Full Name
+                        </label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rollNo">
+                            <i class="fas fa-id-badge"></i>
+                            Roll Number
+                        </label>
+                        <input type="text" id="rollNo" name="rollNo" required placeholder="e.g., ME21B001">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roomNo">
+                            <i class="fas fa-door-open"></i>
+                            Room Number
+                        </label>
+                        <input type="text" id="roomNo" name="roomNo" required placeholder="e.g., A-101">
+                    </div>
+
+                    <div class="form-group timestamp-group">
+                        <label for="timestamp">
+                            <i class="fas fa-clock"></i>
+                            Timestamp
+                        </label>
+                        <input type="text" id="timestamp" name="timestamp" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group complaint-body-group">
+                    <label for="complaintBody">
+                        <i class="fas fa-comment-alt"></i>
+                        Complaint Details
+                        <span class="required">*</span>
+                    </label>
+                    <textarea 
+                        id="complaintBody" 
+                        name="complaintBody" 
+                        required 
+                        placeholder="Please describe your complaint in detail (minimum 10 words required)..."
+                        rows="6"
+                    ></textarea>
+                    <div class="word-count">
+                        <span id="wordCount">0</span> / 10 words minimum
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                        <i class="fas fa-redo"></i>
+                        Reset Form
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Complaint
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="info-sidebar">
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> Guidelines</h3>
+                <ul>
+                    <li>Be specific and clear in your complaint</li>
+                    <li>Minimum 10 words required in complaint body</li>
+                    <li>Provide accurate room and contact details</li>
+                    <li>Complaints are verified by AI before lodging</li>
+                    <li>You'll receive updates on your complaint status</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-chart-line"></i> Quick Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Available</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">< 48h</div>
+                        <div class="stat-label">Response Time</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal">
+        <div class="modal-content loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Processing your complaint...</h3>
+            <p>AI is verifying your complaint. Please wait.</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Complaint Submitted Successfully!</h3>
+            <p>Your complaint has been verified and logged. You will receive updates on the progress.</p>
+            <button class="btn btn-primary" onclick="closeModal('successModal')">OK</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content error-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Complaint Rejected</h3>
+            <p id="errorMessage">Your complaint was flagged as inappropriate or spam. Please review and resubmit.</p>
+            <button class="btn btn-primary" onclick="closeModal('errorModal')">Try Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
